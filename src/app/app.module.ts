@@ -16,7 +16,7 @@ import LogRocket from 'logrocket';
 import createNgrxMiddleware from 'logrocket-ngrx';
 
 
-LogRocket.init('apphub/kitchen-sink');
+LogRocket.init('example-org/example-app');
 
 LogRocket.getSessionURL(sessionURL => {
   console.log(`LogRocket session: ${sessionURL}`);
