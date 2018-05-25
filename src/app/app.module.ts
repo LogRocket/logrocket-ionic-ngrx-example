@@ -10,6 +10,21 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StoreModule } from '@ngrx/store';
+import { counterReducer } from './counter';
+import LogRocket from 'logrocket';
+import createNgrxMiddleware from 'logrocket-ngrx';
+
+
+LogRocket.init('apphub/kitchen-sink');
+
+LogRocket.getSessionURL(sessionURL => {
+  console.log(`LogRocket session: ${sessionURL}`);
+})
+
+const metaReducers = [
+  createNgrxMiddleware(LogRocket),
+];
 
 @NgModule({
   declarations: [
@@ -21,7 +36,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    StoreModule.forRoot({
+      count: counterReducer
+    }, { metaReducers })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

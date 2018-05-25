@@ -1,22 +1,38 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { INCREMENT, DECREMENT, RESET } from './counter';
 
-import { TabsPage } from '../pages/tabs/tabs';
+interface AppState {
+  count: number;
+}
 
 @Component({
-  templateUrl: 'app.html'
+  selector: 'my-app',
+  template: `
+    <button (click)="increment()">Increment</button>
+    <div>Current Count: ({{ count$ | async }})</div>
+    <button (click)="decrement()">Decrement</button>
+
+    <button (click)="reset()">Reset Counter</button>
+  `,
 })
 export class MyApp {
-  rootPage:any = TabsPage;
+  count$: Observable<number>;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
-    });
+  constructor(private store: Store<AppState>) {
+    this.count$ = store.pipe(select('count'));
+  }
+
+  increment() {
+    this.store.dispatch({ type: INCREMENT });
+  }
+
+  decrement() {
+    this.store.dispatch({ type: DECREMENT });
+  }
+
+  reset() {
+    this.store.dispatch({ type: RESET });
   }
 }
