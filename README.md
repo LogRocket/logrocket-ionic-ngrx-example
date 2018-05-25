@@ -1,4 +1,4 @@
-# LogRocket ngrx example app
+# LogRocket Ionic ngrx example app
 
 This example app demonstrates how to use LogRocket with Ionic and ngrx.
 
